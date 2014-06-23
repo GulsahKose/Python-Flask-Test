@@ -27,7 +27,7 @@ def get_db():
 	"""Opens a new database connection if there is none yet for thecurrent application context."""
 	if not hasattr(g, 'sqlite_db'):
 		g.sqlite_db = connect_db()
-		return g.sqlite_db
+	return g.sqlite_db
 
 @app.teardown_appcontext
 def close_db(error):
@@ -39,8 +39,8 @@ def close_db(error):
 def init_db():
 	with app.app_context():
 		db = get_db()
-	with app.open_resource('schema.sql', mode='r') as f:
-		db.cursor().executescript(f.read())
+		with app.open_resource('schema.sql', mode='r') as f:
+			db.cursor().executescript(f.read())
 		db.commit()
 
 @app.route('/')
@@ -72,7 +72,7 @@ def login():
 			session['logged_in'] = True
 			flash('You were logged in')
 			return redirect(url_for('show_entries'))
-		return render_template('login.html', error=error)
+	return render_template('login.html', error=error)
 
 @app.route('/logout')
 def logout():
