@@ -1,21 +1,24 @@
 {% extends "layout.html" %}
 {% block body %}
-	{% if session.logged_in %}
-		<form action="{{ url_for('add_entry') }}" method=post class=add-entry>
-			<dl>
-			<dt>Title:
-			<dd><input type=text size=30 name=title>
-			<dt>Text:
-			<dd><textarea name=text rows=5 cols=40></textarea>
-			<dd><input type=submit value=Share>
-			</dl>
-		</form>
-	{% endif %}
-	<ul class=entries>
-	{% for entry in entries %}
-		<li><h2>{{ entry.title }}</h2>{{ entry.text|safe }}
-	{% else %}
-		<li><em>Unbelievable. No entries here so far</em>
-	{% endfor %}
-	</ul>
+{% if session.logged_in %}
+  <form action="{{ url_for('add_entry') }}" method=post role="form">
+    <div class="form-group">
+      <label>Title</label>
+        <input type="text" name="title" size=30 class="form-control"  placeholder="Enter title please">
+    </div>
+    <div class="form-group">
+      <label>Text</label>
+        <textarea name="text" row=5 cols=40 class="form-control" placeholder="Enter password please"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+  </form>
+{% endif %}
+<table class="table table-hover">
+{% for entry in entries %}
+  <tr class="info text-center"><td><h3>{{ entry.title }}</h3>{{ entry.text|safe }}</td></tr>
+{% else %}
+  <tr class="info text-center"><td><em>Unbelievable. No entries here so far</em></td></tr>
+{% endfor %}
+</table>
 {% endblock %}
+
