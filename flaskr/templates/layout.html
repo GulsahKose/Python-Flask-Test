@@ -68,9 +68,9 @@
       <h1 class="panel-body text-center"><br>Flaskr</h1>
 	<div class=metanav>
 	{% if not session.logged_in %}
-		<a href="{{ url_for('login') }}">log in</a>
+		<a class="btn btn-primary btn-lg" role="button" href="{{ url_for('login') }}">log in</a>
 	{% else %}
-		<a href="{{ url_for('logout') }}">log out</a>
+		<a class="btn btn-primary btn-lg" role="button" href="{{ url_for('logout') }}">log out</a>
 	{% endif %}
 	</div>
 {% for message in get_flashed_messages() %}
