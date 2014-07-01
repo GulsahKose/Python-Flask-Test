@@ -44,11 +44,25 @@ def init_db():
 		db.commit()
 
 @app.route('/')
-def show_entries():
-	db = get_db()
-	cur = db.execute('select title, text from entries order by id desc')
-	entries = cur.fetchall()
-	return render_template('show_entries.html', entries=entries)
+@app.route('/post/<int:page>')
+def show_entries(page=1):
+        db = get_db()
+        sql='select title, text from entries where %d <= id and id <= %d order by id desc' % (page*5-4, page*5)
+        cur = db.execute(sql)
+        entries = cur.fetchall()
+
+        sql2='select * from entries'
+        cur2 = db.execute(sql2)
+        entries2 = cur2.fetchall()
+        if len(entries2)==0:
+                lgt=0
+        elif len(entries2)<=5:
+                lgt=1
+        elif len(entries2)>5 and len(entries2)%5==0:
+                lgt=len(entries2)/5
+        else:
+                lgt=int(math.floor(len(entries2)/5+1))
+        return render_template('show_entries.html', entries=entries, lgt=lgt)
 
 @app.route('/add', methods=['POST'])
 def add_entry():
