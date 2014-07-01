@@ -20,5 +20,15 @@
   <tr class="info text-center"><td><em>Unbelievable. No entries here so far</em></td></tr>
 {% endfor %}
 </table>
+
+<div align="center">
+  <ul class="pagination ">
+    <li><a href="#">&laquo;</a></li>
+    {% for page in range(1,lgt+1) %}
+    <li><a href="{{url_for('show_entries')}}post/{{page}}">{{page}}</a></li>
+    {% endfor %}
+    <li><a href="#">&raquo;</a></li>
+  </ul>
+</div>
 {% endblock %}
 
